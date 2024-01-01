@@ -35,7 +35,9 @@ class SqlFileStrategy
         }
         assert(!empty($sql));
 
-        $this->provider->database($this->database)->execute($sql);
+        $database = $this->provider->database($this->database);
+
+        $database->getDriver()->query($sql)->close();
 
         DatabaseState::$migrated = true;
     }
@@ -53,7 +55,9 @@ class SqlFileStrategy
         }
         assert(!empty($sql));
 
-        $this->provider->database($this->database)->execute($sql);
+        $database = $this->provider->database($this->database);
+
+        $database->getDriver()->query($sql)->close();
 
         DatabaseState::$migrated = false;
     }
